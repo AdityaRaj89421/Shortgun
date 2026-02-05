@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(uuid())
+  email           String   @unique
+  password        String
+  name            String
+  college         String
+  branch          String
+  year            Int
+  role            String   @default("STUDENT") // STUDENT, TEACHER, ADMIN
+  reputation      Int      @default(0)
+  createdAt       DateTime @default(now())
+  
+  doubts          Doubt[]
+  answers         Answer[]
+  events          Event[]
+  studySubjects   StudySubject[]
+  insights        Insight[]
+  notifications   Notification[]
+}
+
+model Doubt {
+  id              String   @id @default(uuid())
+  title           String
+  description     String
+  subject         String
+  tags            String   // Comma separated tags
+  authorId        String
+  acceptedAnswerId String?
+  createdAt       DateTime @default(now())
+
+  author          User     @relation(fields: [authorId], references: [id])
+  answers         Answer[]
+}
+
+model Answer {
+  id              String   @id @default(uuid())
+  content         String
+  doubtId         String
+  authorId        String
+  isAccepted      Boolean  @default(false)
+  upvotes         Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  doubt           Doubt    @relation(fields: [doubtId], references: [id])
+  author          User     @relation(fields: [authorId], references: [id])
+}
+
+model Event {
+  id              String   @id @default(uuid())
+  title           String
+  description     String
+  date            DateTime
+  location        String
+  link            String?
+  category        String   // FEST, HACKATHON, WORKSHOP
+  status          String   @default("PENDING") // PENDING, APPROVED
+  authorId        String
+  createdAt       DateTime @default(now())
+
+  author          User     @relation(fields: [authorId], references: [id])
+}
+
+model StudySubject {
+  id              String   @id @default(uuid())
+  name            String
+  targetHours     Int      @default(0) // Weekly target in hours
+  userId          String
+  createdAt       DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id])
+  sessions        StudySession[]
+}
+
+model StudySession {
+  id              String   @id @default(uuid())
+  subjectId       String
+  durationMinutes Int
+  date            DateTime @default(now())
+
+  subject         StudySubject @relation(fields: [subjectId], references: [id])
+}
+
+model Insight {
+  id              String   @id @default(uuid())
+  title           String
+  content         String
+  category        String
+  authorId        String
+  createdAt       DateTime @default(now())
+
+  author          User     @relation(fields: [authorId], references: [id])
+}
+
+model Notification {
+  id              String   @id @default(uuid())
+  content         String
+  userId          String
+  read            Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id])
+}

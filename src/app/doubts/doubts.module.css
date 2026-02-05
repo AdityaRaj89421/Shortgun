@@ -1,0 +1,42 @@
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.searchWrapper {
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    color: var(--muted-foreground);
+}
+
+.searchInput {
+    padding-left: 2.5rem !important;
+}
+
+.doubtCard {
+    transition: border-color 0.2s;
+}
+
+.doubtCard:hover {
+    border-color: var(--primary);
+}
+
+.subjectBadge {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}

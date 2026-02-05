@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #030712;
+  --color-foreground: #f8fafc;
+
+  --color-primary: #a855f7;
+  --color-secondary: #ec4899;
+  --color-tertiary: #3b82f6;
+
+  --color-bg-dark: #030712;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 20s linear infinite;
+  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes spin-slow {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: .5;
+    }
+  }
+}
+
+:root {
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --primary: var(--color-primary);
+  --secondary: var(--color-secondary);
+  --tertiary: var(--color-tertiary);
+}
+
+@layer base {
+  body {
+    @apply bg-gray-950 text-white overflow-x-hidden selection:bg-purple-500/30;
+  }
+
+  h1,
+  .h1 {
+    @apply text-4xl md:text-6xl font-extrabold tracking-tight leading-tight;
+  }
+
+  h2,
+  .h2 {
+    @apply text-3xl md:text-5xl font-bold tracking-tight;
+  }
+
+  h3,
+  .h3 {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+
+  p,
+  .body-text {
+    @apply text-base md:text-lg text-gray-300 leading-relaxed;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent;
+  }
+
+  .glow-purple {
+    filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.5));
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-purple-600 rounded-full;
+}
